@@ -1,14 +1,11 @@
 try:
-    # When executed as a module: python -m ai_server.run_server
-    from . import create_app
-    from .config import Config
-except ImportError:
-    # Fallback for running as a script: python ai_server/run_server.py
-    import os
-    import sys
-    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-    from ai_server import create_app  # type: ignore
-    from ai_server.config import Config  # type: ignore
+    # When executed as a package module (python -m <pkg>.run_server)
+    from . import create_app  # type: ignore
+    from .config import Config  # type: ignore
+except Exception:
+    # Fallback for direct module import (e.g., gunicorn run_server:app)
+    from __init__ import create_app  # type: ignore
+    from config import Config  # type: ignore
 
 
 app = create_app()
