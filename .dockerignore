@@ -1,0 +1,26 @@
+.git
+.gitignore
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.vscode/
+.idea/
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Large local artifacts
+models/
+!models/README.md
+
+# Caches
+.cache/
+**/__pycache__/
+
+

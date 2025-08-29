@@ -22,6 +22,17 @@ def create_app() -> Flask:
     app.register_blueprint(text_bp, url_prefix="/v1/text")
     app.register_blueprint(text_bp_alias, url_prefix="/ai/text")
 
+    # Optionally warm up heavy models on startup to avoid first-request latency
+    if getattr(Config, "WARMUP_MODELS", False):
+        try:
+            from .routes.text import get_analyzer
+            from .routes.vision import get_classifier
+            get_analyzer()
+            get_classifier()
+        except Exception as exc:
+            # Do not crash the app if warmup fails; log and continue
+            app.logger.warning(f"Warmup failed: {exc}")
+
     @app.route("/", methods=["GET"])
     def index():
         return jsonify({

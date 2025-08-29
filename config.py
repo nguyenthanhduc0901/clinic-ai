@@ -2,10 +2,17 @@ import os
 from dotenv import load_dotenv
 
 
+# Load .env before reading environment variables
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
+
+
 class Config:
-    DEBUG = True
+    DEBUG = os.environ.get("DEBUG", "false").lower() in {"1", "true", "yes"}
     HOST = os.environ.get("AI_SERVER_HOST", "0.0.0.0")
     PORT = int(os.environ.get("AI_SERVER_PORT", "8000"))
+
+    # Warmup heavy models on startup (set WARMUP_MODELS=true to enable)
+    WARMUP_MODELS = os.environ.get("WARMUP_MODELS", "false").lower() in {"1", "true", "yes"}
 
     # Vision model (TensorFlow Keras) local filename in ai_server/models
     HF_MODEL_FILE = os.environ.get("VISION_KERAS_FILE", "DermaAI.keras")
@@ -17,9 +24,6 @@ class Config:
     MODELS_DIR = os.path.join(os.path.dirname(__file__), "models")
 
     # ASR (speech-to-text)
-    # Load .env (if present)
-    load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
-
     ASR_PROVIDER = os.environ.get("ASR_PROVIDER", "openai").lower()  # openai | deepgram
     ASR_API_KEY = os.environ.get("ASR_API_KEY", "")
     ASR_MODEL = os.environ.get("ASR_MODEL", "whisper-1")  # used for OpenAI
