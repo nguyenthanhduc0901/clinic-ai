@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from ..config import Config
+from config import Config
 
 
 class ASRService:
