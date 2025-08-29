@@ -143,47 +143,7 @@ resp = requests.post(api, json=payload, timeout=600)
 print(json.dumps(resp.json(), ensure_ascii=False, indent=2))
 ```
 
-### POST /v1/text/transcribe
-- multipart/form-data fields:
-  - `file`: bắt buộc (audio/webm|wav|mp3|m4a|ogg)
-  - `language`: tùy chọn (`vi`|`en`, mặc định `vi`)
-- Phản hồi thành công (200):
-```json
-{ "transcript": "..." }
-```
-
-- Ví dụ cURL (Windows PowerShell dùng `-F` với `@path`):
-```bash
-curl -X POST http://127.0.0.1:8000/v1/text/transcribe \
-  -H "Accept: application/json" \
-  -F "file=@sample.wav" -F "language=vi"
-```
-
-### POST /v1/text/transcribe-and-analyze
-- multipart/form-data: cùng trường như trên
-- Luồng: Transcribe (OpenAI|Deepgram) → Analyze → Chuẩn hóa khóa
-- Phản hồi thành công (200):
-```json
-{
-  "transcript": "...",
-  "ai": {
-    "raw": "{\"symptom\":[\"đau đầu\"],\"diagnosis\":\"...\"}",
-    "json": { "symptom": ["đau đầu"], "diagnosis": "..." }
-  }
-}
-```
-
-### Alias /ai/text/...
-- Hỗ trợ gọi qua: `/ai/text/transcribe` và `/ai/text/transcribe-and-analyze`
-
-### Cấu hình ASR qua ENV
-- `ASR_PROVIDER` = `openai` | `deepgram`
-- `ASR_API_KEY` = khóa provider
-- `ASR_MODEL` (OpenAI: `whisper-1`; Deepgram: ví dụ `whisper-large`)
-- Timeout: `ASR_TIMEOUT` (mặc định 600 giây)
-Ghi chú Deepgram:
-- Với file `.m4a`, server tự ánh xạ Content-Type sang `audio/mp4`.
-- Nếu gặp lỗi model/language, đặt `ASR_MODEL` phù hợp (vd: `whisper-large`).
+<!-- ASR endpoints were removed as requested. -->
 
 ## Ghi chú vận hành
 - Lần chạy đầu có thể chậm do tải/khởi tạo model

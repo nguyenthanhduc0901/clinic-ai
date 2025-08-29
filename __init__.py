@@ -16,11 +16,9 @@ def create_app() -> Flask:
     from routes.health import bp as health_bp
     from routes.vision import bp as vision_bp
     from routes.text import bp as text_bp
-    from routes.text import bp_alias as text_bp_alias
     app.register_blueprint(health_bp)
     app.register_blueprint(vision_bp, url_prefix="/v1/vision")
     app.register_blueprint(text_bp, url_prefix="/v1/text")
-    app.register_blueprint(text_bp_alias, url_prefix="/ai/text")
 
     # Optionally warm up heavy models on startup to avoid first-request latency
     if getattr(Config, "WARMUP_MODELS", False):
