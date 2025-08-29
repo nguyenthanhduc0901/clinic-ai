@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
 
-from ..services.text_service import MedicalDialogueAnalyzer
-from ..services.asr_service import ASRService
-from ..config import Config
+from services.text_service import MedicalDialogueAnalyzer
+from services.asr_service import ASRService
+from config import Config
 
 
 bp = Blueprint("text", __name__)

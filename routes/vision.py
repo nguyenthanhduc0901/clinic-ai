@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 
-from ..services.vision_service import VisionClassifier
+from services.vision_service import VisionClassifier
 
 
 bp = Blueprint("vision", __name__)

@@ -8,7 +8,7 @@ import tensorflow as tf
 from PIL import Image
 from tensorflow.keras.applications.efficientnet_v2 import preprocess_input
 
-from ..config import Config
+from config import Config
 
 
 class VisionClassifier:

@@ -4,7 +4,7 @@ from typing import List, Dict, Any
 
 from llama_cpp import Llama
 
-from ..config import Config
+from config import Config
 
 
 def resolve_model_path() -> str:
