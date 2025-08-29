@@ -9,7 +9,8 @@ load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 class Config:
     DEBUG = os.environ.get("DEBUG", "false").lower() in {"1", "true", "yes"}
     HOST = os.environ.get("AI_SERVER_HOST", "0.0.0.0")
-    PORT = int(os.environ.get("AI_SERVER_PORT", "8000"))
+    # Respect generic PORT used by many PaaS providers (e.g., Render)
+    PORT = int(os.environ.get("PORT") or os.environ.get("AI_SERVER_PORT", "8000"))
 
     # Warmup heavy models on startup (set WARMUP_MODELS=true to enable)
     WARMUP_MODELS = os.environ.get("WARMUP_MODELS", "false").lower() in {"1", "true", "yes"}
