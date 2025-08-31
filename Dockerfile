@@ -36,16 +36,7 @@ RUN mkdir -p /app/models
 
 EXPOSE 8000
 
-# Optional model download at startup via environment variables
-#   - KERAS_URL: HTTPS URL to DermaAI.keras
-#   - GGUF_URL: HTTPS URL to tinyllama*.gguf
-COPY ./scripts/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-EXPOSE 8000
-
-# Default command uses PORT if provided (e.g., Render), else AI_SERVER_PORT
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["sh", "-c", "gunicorn -w 1 -k gthread -t 180 -b 0.0.0.0:${PORT:-${AI_SERVER_PORT:-8000}} run_server:app"]
+# Default command: Gunicorn with one worker and threads; tune as needed
+CMD ["sh", "-c", "gunicorn -w 1 -k gthread -t 180 -b 0.0.0.0:${AI_SERVER_PORT:-8000} run_server:app"]
 
 
